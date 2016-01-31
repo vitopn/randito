@@ -51,7 +51,8 @@ public class RandomStringTest {
     }
 
     class HasNonRandomString extends HasValue<String>{
-        public String theValue;
+        @SuppressWarnings("unused")
+        private String theValue;
 
         @Override
         String getValue() {
@@ -60,7 +61,7 @@ public class RandomStringTest {
     }
     class HasRandomString extends HasValue<String>{
         @Randito
-        String theValue;
+        private String theValue;
         @Override
         String getValue() {
             return theValue;
@@ -68,7 +69,7 @@ public class RandomStringTest {
     }
     class HasUpperCaseRandomString extends HasValue<String>{
         @Randito(caseChange = Randito.CASE_CHANGE.UPPER)
-        String theValue;
+        private String theValue;
         @Override
         String getValue() {
             return theValue;
@@ -76,7 +77,7 @@ public class RandomStringTest {
     }
     class HasLowerCaseRandomString extends HasValue<String>{
         @Randito(caseChange = Randito.CASE_CHANGE.LOWER)
-        String theValue;
+        private String theValue;
         @Override
         String getValue() {
             return theValue;
@@ -84,7 +85,7 @@ public class RandomStringTest {
     }
     class HasRandomStringCaseChangeNone extends HasValue<String>{
         @Randito(caseChange = Randito.CASE_CHANGE.NONE)
-        String theValue;
+        private String theValue;
         @Override
         String getValue() {
             return theValue;
