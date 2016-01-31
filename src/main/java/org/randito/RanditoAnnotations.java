@@ -21,7 +21,21 @@ public class RanditoAnnotations {
             return;
         }
         if(field.getType() == String.class){
-            new FieldSetter(target, field).set(RandomGenerator.generateRandomString(field.getName()));
+            String value = generateString(field, annotation);
+            new FieldSetter(target, field).set(value);
         }
+    }
+
+    private static String generateString(Field field, Randito annotation) {
+        String value = RandomGenerator.generateRandomString(field.getName());
+        switch (annotation.caseChange()){
+            case UPPER:
+                value = value.toUpperCase();
+                break;
+            case LOWER:
+                value =value.toLowerCase();
+                break;
+        }
+        return value;
     }
 }
