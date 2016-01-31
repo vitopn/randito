@@ -11,6 +11,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 @interface Randito {
+    int maxIntExclusive() default Integer.MAX_VALUE;
+
+    int minIntInclusive() default Integer.MIN_VALUE;
+
     enum CASE_CHANGE {
         UPPER,
         LOWER,
