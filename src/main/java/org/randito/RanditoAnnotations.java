@@ -21,9 +21,10 @@ public class RanditoAnnotations {
             return;
         }
 
-        if(field.getType() == String.class){
+        Class<?> fieldType = field.getType();
+        if(fieldType == String.class){
             new FieldSetter(target, field).set(generateString(field, annotation));
-        } else if(field.getType() == int.class){
+        } else if((fieldType == int.class) || (fieldType == Integer.class)){
             new FieldSetter(target, field).set(generateInt(annotation));
         }
     }
