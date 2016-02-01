@@ -11,8 +11,11 @@ public class RandomGenerator {
         return ThreadLocalRandom.current().nextInt();
     }
 
-    public static int generateRandomInt(int minInt, int maxInt) {
-        return ThreadLocalRandom.current().nextInt(minInt, maxInt);
+    public static int generateRandomInt(int minInclusive, int maxExclusive) {
+        return ThreadLocalRandom.current().nextInt(minInclusive, maxExclusive);
     }
 
+    public static long generateRandomLong(long minInclusive, long maxExclusive) {
+        return ThreadLocalRandom.current().nextLong(minInclusive, maxExclusive);
+    }
 }

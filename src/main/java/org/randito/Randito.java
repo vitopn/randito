@@ -15,6 +15,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
     int minIntInclusive() default Integer.MIN_VALUE;
 
+    long maxLongExclusive() default Long.MAX_VALUE;
+
+    long minLongInclusive() default Long.MIN_VALUE;
+
     enum CASE_CHANGE {
         UPPER,
         LOWER,

@@ -22,11 +22,18 @@ public class RanditoAnnotations {
         }
 
         Class<?> fieldType = field.getType();
+        FieldSetter fieldSetter = new FieldSetter(target, field);
         if(fieldType == String.class){
-            new FieldSetter(target, field).set(generateString(field, annotation));
+            fieldSetter.set(generateString(field, annotation));
         } else if((fieldType == int.class) || (fieldType == Integer.class)){
-            new FieldSetter(target, field).set(generateInt(annotation));
+            fieldSetter.set(generateInt(annotation));
+        } else if((fieldType == long.class) || (fieldType == Long.class)){
+            fieldSetter.set(generateLong(annotation));
         }
+    }
+
+    private static Object generateLong(Randito annotation) {
+        return RandomGenerator.generateRandomLong(annotation.minLongInclusive(), annotation.maxLongExclusive());
     }
 
     private static int generateInt(Randito annotation) {
