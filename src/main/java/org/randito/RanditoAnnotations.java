@@ -20,10 +20,16 @@ public class RanditoAnnotations {
         if(annotation == null){
             return;
         }
+
         if(field.getType() == String.class){
-            String value = generateString(field, annotation);
-            new FieldSetter(target, field).set(value);
+            new FieldSetter(target, field).set(generateString(field, annotation));
+        } else if(field.getType() == int.class){
+            new FieldSetter(target, field).set(generateInt(annotation));
         }
+    }
+
+    private static int generateInt(Randito annotation) {
+        return RandomGenerator.generateRandomInt(annotation.minIntInclusive(), annotation.maxIntExclusive());
     }
 
     private static String generateString(Field field, Randito annotation) {

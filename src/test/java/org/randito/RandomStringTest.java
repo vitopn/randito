@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class RandomStringTest {
-    public static final int SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT = 10;
-
     @Test
     public void test_notARandomStringIsNotSet() throws Exception {
         Assert.assertNull(new HasNonRandomString().initAndGetValue());
@@ -13,36 +11,36 @@ public class RandomStringTest {
 
     @Test
     public void test_randomStringIsSet() throws Exception {
-        Assert.assertNotNull(new HasRandomString().validateSomewhatRandomAndGetValue());
+        Assert.assertNotNull(new HasRandomString().validateAndReturnValue());
     }
 
     @Test
     public void test_randomString_startsWith_propertyName(){
         HasRandomString target = new HasRandomString();
         RanditoAnnotations.init(target);
-        Assert.assertTrue(new HasRandomString().validateSomewhatRandomAndGetValue().startsWith("theValue"));
+        Assert.assertTrue(new HasRandomString().validateAndReturnValue().startsWith("theValue"));
     }
 
     @Test
     public void test_upperCaseRandomString_upperCase(){
-        String value = new HasUpperCaseRandomString().validateSomewhatRandomAndGetValue();
+        String value = new HasUpperCaseRandomString().validateAndReturnValue();
         Assert.assertEquals(value.toUpperCase(), value);
     }
 
     @Test
     public void test_lowerCaseRandomString_isLowerCase(){
-        String value = new HasLowerCaseRandomString().validateSomewhatRandomAndGetValue();
+        String value = new HasLowerCaseRandomString().validateAndReturnValue();
         Assert.assertEquals(value.toLowerCase(), value);
     }
 
     @Test
     public void test_hasRandomString_isMixedCase(){
-        isMixedCase(new HasRandomString().validateSomewhatRandomAndGetValue());
+        isMixedCase(new HasRandomString().validateAndReturnValue());
     }
 
     @Test
     public void test_HasRandomStringCaseChangeNone_isMixedCase(){
-        isMixedCase(new HasRandomStringCaseChangeNone().validateSomewhatRandomAndGetValue());
+        isMixedCase(new HasRandomStringCaseChangeNone().validateAndReturnValue());
     }
 
     private void isMixedCase(String value) {
