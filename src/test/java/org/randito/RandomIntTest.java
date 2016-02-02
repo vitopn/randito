@@ -25,7 +25,7 @@ public class RandomIntTest {
     }
 
     class HasRandomInt extends HasValue<Integer>{
-        @Randito
+        @Rand
         private int theValue;
 
         @Override
@@ -35,7 +35,7 @@ public class RandomIntTest {
     }
 
     class HasRandomIntMaxInt extends HasValue<Integer>{
-        @Randito(maxIntExclusive = Integer.MIN_VALUE + 3)
+        @Rand(maxIntExclusive = Integer.MIN_VALUE + 3)
         private int theValue;
 
         @Override
@@ -45,7 +45,7 @@ public class RandomIntTest {
     }
 
     class HasRandomIntMinInt extends HasValue<Integer>{
-        @Randito(minIntInclusive = Integer.MAX_VALUE - 3)
+        @Rand(minIntInclusive = Integer.MAX_VALUE - 3)
         private int theValue;
 
         @Override
@@ -55,7 +55,7 @@ public class RandomIntTest {
     }
 
     class HasRandomIntMinAndMaxInt extends HasValue<Integer>{
-        @Randito(minIntInclusive = -1, maxIntExclusive = 1)
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
         private int theValue;
 
         @Override

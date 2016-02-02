@@ -13,12 +13,12 @@ abstract class HasValue<T extends Comparable<T>>{
     abstract T getValue();
 
     public T initAndGetValue(){
-        RanditoAnnotations.init(this);
+        RanditoAnnotations.initRands(this);
         return getValue();
     }
 
     public void validate(){
-        RanditoAnnotations.init(this);
+        RanditoAnnotations.initRands(this);
         validateSomeWhatRandom();
         validateRange();
     }

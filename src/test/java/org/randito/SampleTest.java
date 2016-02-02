@@ -6,15 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SampleTest {
-    @Randito
+    @Rand
     String randomString;
 
-    @Randito(minIntInclusive = 13, maxIntExclusive = 45)
+    @Rand(minIntInclusive = 13, maxIntExclusive = 45)
     int randomInt;
 
     @Before
     public void setUp() throws Exception {
-        RanditoAnnotations.init(this);
+        RanditoAnnotations.initRands(this);
     }
 
     @Test

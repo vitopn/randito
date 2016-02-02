@@ -17,7 +17,7 @@ public class RandomStringTest {
     @Test
     public void test_randomString_startsWith_propertyName(){
         HasRandomString target = new HasRandomString();
-        RanditoAnnotations.init(target);
+        RanditoAnnotations.initRands(target);
         Assert.assertTrue(new HasRandomString().validateAndReturnValue().startsWith("theValue"));
     }
 
@@ -58,7 +58,7 @@ public class RandomStringTest {
         }
     }
     class HasRandomString extends HasValue<String>{
-        @Randito
+        @Rand
         private String theValue;
         @Override
         String getValue() {
@@ -66,7 +66,7 @@ public class RandomStringTest {
         }
     }
     class HasUpperCaseRandomString extends HasValue<String>{
-        @Randito(caseChange = Randito.CASE_CHANGE.UPPER)
+        @Rand(caseChange = Rand.CASE_CHANGE.UPPER)
         private String theValue;
         @Override
         String getValue() {
@@ -74,7 +74,7 @@ public class RandomStringTest {
         }
     }
     class HasLowerCaseRandomString extends HasValue<String>{
-        @Randito(caseChange = Randito.CASE_CHANGE.LOWER)
+        @Rand(caseChange = Rand.CASE_CHANGE.LOWER)
         private String theValue;
         @Override
         String getValue() {
@@ -82,7 +82,7 @@ public class RandomStringTest {
         }
     }
     class HasRandomStringCaseChangeNone extends HasValue<String>{
-        @Randito(caseChange = Randito.CASE_CHANGE.NONE)
+        @Rand(caseChange = Rand.CASE_CHANGE.NONE)
         private String theValue;
         @Override
         String getValue() {
