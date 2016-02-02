@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 
 public class RanditoAnnotations {
 
-    public static void init(Object target) {
+    public static void initRands(Object target) {
         Class<?> targetClass = target.getClass();
         Field[] fields = targetClass.getDeclaredFields();
         for(Field field : fields){
@@ -15,8 +15,8 @@ public class RanditoAnnotations {
     }
 
     private static void processField(Object target, Field field) {
-        Class<Randito> randomClass = Randito.class;
-        Randito annotation = field.getAnnotation(randomClass);
+        Class<Rand> randomClass = Rand.class;
+        Rand annotation = field.getAnnotation(randomClass);
         if(annotation == null){
             return;
         }
@@ -32,15 +32,15 @@ public class RanditoAnnotations {
         }
     }
 
-    private static Object generateLong(Randito annotation) {
+    private static Object generateLong(Rand annotation) {
         return RandomGenerator.generateRandomLong(annotation.minLongInclusive(), annotation.maxLongExclusive());
     }
 
-    private static int generateInt(Randito annotation) {
+    private static int generateInt(Rand annotation) {
         return RandomGenerator.generateRandomInt(annotation.minIntInclusive(), annotation.maxIntExclusive());
     }
 
-    private static String generateString(Field field, Randito annotation) {
+    private static String generateString(Field field, Rand annotation) {
         String value = RandomGenerator.generateRandomString(field.getName());
         switch (annotation.caseChange()){
             case UPPER:

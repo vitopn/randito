@@ -25,7 +25,7 @@ public class RandomLongPrimitiveTest {
     }
 
     class HasRandomLong extends HasValue<Long>{
-        @Randito
+        @Rand
         private long theValue;
 
         @Override
@@ -35,7 +35,7 @@ public class RandomLongPrimitiveTest {
     }
 
     class HasRandomLongMaxLong extends HasValue<Long>{
-        @Randito(maxLongExclusive = Long.MIN_VALUE + 3)
+        @Rand(maxLongExclusive = Long.MIN_VALUE + 3)
         private long theValue;
 
         @Override
@@ -45,7 +45,7 @@ public class RandomLongPrimitiveTest {
     }
 
     class HasRandomLongMinLong extends HasValue<Long>{
-        @Randito(minLongInclusive = Long.MAX_VALUE - 3)
+        @Rand(minLongInclusive = Long.MAX_VALUE - 3)
         private long theValue;
 
         @Override
@@ -55,7 +55,7 @@ public class RandomLongPrimitiveTest {
     }
 
     class HasRandomLongMinAndMaxLong extends HasValue<Long>{
-        @Randito(minLongInclusive = -1, maxLongExclusive = 1)
+        @Rand(minLongInclusive = -1, maxLongExclusive = 1)
         private long theValue;
 
         @Override
