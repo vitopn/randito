@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-group = "org.randito"
+group = "com.github.vitopn"
 //noinspection GroovyUnusedAssignment
 archivesBaseName = "randito"
 version = "0.0.1"
