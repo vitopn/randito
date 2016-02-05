@@ -24,6 +24,11 @@ public class RandomIntegerTest {
         new HasRandomIntMinAndMaxInt().setMinValue(-1).setMaxValue(1).validate();
     }
 
+    @Test
+    public void test_multipleInts(){
+        new HasTwoRandomInts().setMinValue(-1).setMaxValue(1).validate();
+    }
+
     class HasRandomInt extends HasValue<Integer>{
         @Rand
         private Integer theValue;
@@ -61,6 +66,27 @@ public class RandomIntegerTest {
         @Override
         Integer getValue() {
             return theValue;
+        }
+    }
+
+    class HasTwoRandomInts extends  HasXValues<Integer>{
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private Integer value1;
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private Integer value2;
+
+        @Override
+        Integer getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 2;
         }
     }
 

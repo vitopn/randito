@@ -3,10 +3,27 @@ package org.randito;
 import org.mockito.internal.util.reflection.FieldSetter;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class RanditoAnnotations {
 
+    private static final int MAX_UNIQUE_ATTEMPT = 50;
+    private final Object target;
+    private Map<Class,Set<Object>> values;
+
+    public RanditoAnnotations(Object target) {
+        this.target = target;
+        values = new HashMap<Class, Set<Object>>();
+    }
+
     public static void initRands(Object target) {
+        new RanditoAnnotations(target).execute();
+    }
+
+    private void execute() {
         Class<?> targetClass = target.getClass();
         Field[] fields = targetClass.getDeclaredFields();
         for(Field field : fields){
@@ -14,7 +31,8 @@ public class RanditoAnnotations {
         }
     }
 
-    private static void processField(Object target, Field field) {
+
+    private void processField(Object target, Field field) {
         Class<Rand> randomClass = Rand.class;
         Rand annotation = field.getAnnotation(randomClass);
         if(annotation == null){
@@ -23,24 +41,56 @@ public class RanditoAnnotations {
 
         Class<?> fieldType = field.getType();
         FieldSetter fieldSetter = new FieldSetter(target, field);
-        if(fieldType == String.class){
-            fieldSetter.set(generateString(field, annotation));
-        } else if((fieldType == int.class) || (fieldType == Integer.class)){
-            fieldSetter.set(generateInt(annotation));
-        } else if((fieldType == long.class) || (fieldType == Long.class)){
-            fieldSetter.set(generateLong(annotation));
+        Object value = null;
+        for(int attempt = 0; attempt < MAX_UNIQUE_ATTEMPT; attempt++) {
+            value = generateValue(annotation, field, fieldType);
+            if(isUnique(fieldType, value)){
+                setValue(fieldSetter, fieldType, value);
+                return;
+            }
         }
+        setValue(fieldSetter, fieldType, value);
     }
 
-    private static Object generateLong(Rand annotation) {
+    private Object generateValue(Rand annotation, Field field, Class<?> fieldType) {
+        Object value;
+        if (fieldType == String.class) {
+            value = generateString(field, annotation);
+        } else if ((fieldType == int.class) || (fieldType == Integer.class)) {
+            value = generateInt(annotation);
+        } else if ((fieldType == long.class) || (fieldType == Long.class)) {
+            value = generateLong(annotation);
+        } else {
+            throw new UnsupportedFieldTypeException(fieldType);
+        }
+        return value;
+    }
+
+    private boolean isUnique(Class<?> fieldType, Object value) {
+        return !getValuesForType(fieldType).contains(value);
+    }
+
+    private void setValue(FieldSetter fieldSetter , Class<?> fieldType, Object value) {
+        fieldSetter.set(value);
+        getValuesForType(fieldType).add(value);
+    }
+
+    private Set<Object> getValuesForType(Class<?> fieldType) {
+        if(!values.containsKey(fieldType)){
+            values.put(fieldType, new HashSet<Object>());
+        }
+        return values.get(fieldType);
+    }
+
+    private  Object generateLong(Rand annotation) {
         return RandomGenerator.generateRandomLong(annotation.minLongInclusive(), annotation.maxLongExclusive());
     }
 
-    private static int generateInt(Rand annotation) {
+    private int generateInt(Rand annotation) {
         return RandomGenerator.generateRandomInt(annotation.minIntInclusive(), annotation.maxIntExclusive());
     }
 
-    private static String generateString(Field field, Rand annotation) {
+    private String generateString(Field field, Rand annotation) {
         String value = RandomGenerator.generateRandomString(field.getName());
         switch (annotation.caseChange()){
             case UPPER:
