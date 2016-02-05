@@ -1,32 +1,23 @@
 package org.randito;
 
-import org.junit.Test;
+public class RandomIntegerTest extends BaseNumberTest{
 
-public class RandomIntegerTest {
 
-    @Test
-    public void testIt(){
-        new HasRandomInt().validate();
-    }
-
-    @Test
-    public void test_maxInt(){
-        new HasRandomIntMaxInt().setMinValue(Integer.MIN_VALUE).setMaxValue(Integer.MIN_VALUE + 3).validate();
-    }
-
-    @Test
-    public void test_minInt(){
-        new HasRandomIntMinInt().setMinValue(Integer.MAX_VALUE - 3).validate();
-    }
-
-    @Test
-    public void test_minAndMaxInt(){
-        new HasRandomIntMinAndMaxInt().setMinValue(-1).setMaxValue(1).validate();
-    }
-
-    @Test
-    public void test_multipleInts(){
-        new HasTwoRandomInts().setMinValue(-1).setMaxValue(1).validate();
+    @Override
+    HasXValues getTargetInstance(TEST_CLASS_TYPE targetType) {
+        switch(targetType){
+            case SINGLE_NO_RANGE:
+                return new HasRandomInt();
+            case SINGLE_MAX_IS_MIN_PLUS_3:
+                return new HasRandomIntMaxInt().setMinValue(Integer.MIN_VALUE).setMaxValue(Integer.MIN_VALUE + 3);
+            case SINGLE_MIN_IS_MAX_MINUS_3:
+                new HasRandomIntMinInt().setMinValue(Integer.MAX_VALUE - 3);
+            case SINGLE_MIN_MAX_TWO_APART:
+                return new HasRandomIntMinAndMaxInt().setMinValue(-1).setMaxValue(1);
+            case MULTIPLE_MIN_MAX_TWO_APART:
+                return new HasTwoRandomInts().setMinValue(-1).setMaxValue(1);
+        }
+        return null;
     }
 
     class HasRandomInt extends HasValue<Integer>{
