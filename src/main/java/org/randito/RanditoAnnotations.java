@@ -60,10 +60,18 @@ public class RanditoAnnotations {
             value = generateInt(annotation);
         } else if ((fieldType == long.class) || (fieldType == Long.class)) {
             value = generateLong(annotation);
+        } else if (fieldType.isEnum()){
+            value = generateEnumValue(fieldType);
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
         return value;
+    }
+
+    private Object generateEnumValue(Class<?> fieldType) {
+        Object[] enumConstants = fieldType.getEnumConstants();
+        int randomEnumIndex = RandomGenerator.generateRandomInt(0, enumConstants.length);
+        return enumConstants[randomEnumIndex];
     }
 
     private boolean isUnique(Class<?> fieldType, Object value) {
