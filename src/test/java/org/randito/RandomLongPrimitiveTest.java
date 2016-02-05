@@ -1,32 +1,22 @@
 package org.randito;
 
-import org.junit.Test;
+public class RandomLongPrimitiveTest extends BaseNumberTest{
 
-public class RandomLongPrimitiveTest {
-
-    @Test
-    public void testIt() {
-        new HasRandomLong().validate();
-    }
-
-    @Test
-    public void test_maxLong() {
-        new HasRandomLongMaxLong().setMinValue(Long.MIN_VALUE).setMaxValue(Long.MIN_VALUE + 3).validate();
-    }
-
-    @Test
-    public void test_minLong() {
-        new HasRandomLongMinLong().setMinValue(Long.MAX_VALUE - 3).validate();
-    }
-
-    @Test
-    public void test_minAndMaxLong() {
-        new HasRandomLongMinAndMaxLong().setMinValue(-1L).setMaxValue(1L).validate();
-    }
-
-    @Test
-    public void test_multipleLongs() {
-        new HasTwoRandomLongs().setMinValue(-1L).setMaxValue(1L).validate();
+    @Override
+    HasXValues getTargetInstance(BaseNumberTest.TEST_CLASS_TYPE targetType) {
+        switch(targetType){
+            case SINGLE_NO_RANGE:
+                return new HasRandomLong();
+            case SINGLE_MAX_IS_MIN_PLUS_3:
+                return new HasRandomLongMaxLong().setMinValue(Long.MIN_VALUE).setMaxValue(Long.MIN_VALUE + 3);
+            case SINGLE_MIN_IS_MAX_MINUS_3:
+                new HasRandomLongMinLong().setMinValue(Long.MAX_VALUE - 3);
+            case SINGLE_MIN_MAX_TWO_APART:
+                return new HasRandomLongMinAndMaxLong().setMinValue(-1L).setMaxValue(1L);
+            case MULTIPLE_MIN_MAX_TWO_APART:
+                return new HasTwoRandomLongs().setMinValue(-1L).setMaxValue(1L);
+        }
+        return null;
     }
 
     class HasRandomLong extends HasValue<Long> {
