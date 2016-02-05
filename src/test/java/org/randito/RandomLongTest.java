@@ -24,6 +24,12 @@ public class RandomLongTest {
         new HasRandomLongMinAndMaxLong().setMinValue(-1L).setMaxValue(1L).validate();
     }
 
+
+    @Test
+    public void test_multipleLongs() {
+        new HasTwoRandomLongs().setMinValue(-1L).setMaxValue(1L).validate();
+    }
+
     class HasRandomLong extends HasValue<Long>{
         @Rand
         private Long theValue;
@@ -63,5 +69,28 @@ public class RandomLongTest {
             return theValue;
         }
     }
+
+    class HasTwoRandomLongs extends HasXValues<Long> {
+        @Rand(minLongInclusive = -1, maxLongExclusive = 1)
+        private Long value1;
+        @Rand(minLongInclusive = -1, maxLongExclusive = 1)
+        private Long value2;
+
+        @Override
+        Long getValue(int index) {
+            if (index == 0) {
+                return value1;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 2;
+        }
+
+    }
+
 
 }

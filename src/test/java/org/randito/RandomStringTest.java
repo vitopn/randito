@@ -43,6 +43,11 @@ public class RandomStringTest {
         isMixedCase(new HasRandomStringCaseChangeNone().validateAndReturnValue());
     }
 
+    @Test
+    public void test_HasMultipleRandomStrings(){
+        new HasMultipleRandomStrings().validate();
+    }
+
     private void isMixedCase(String value) {
         Assert.assertNotEquals(value.toLowerCase(), value);
         Assert.assertNotEquals(value.toUpperCase(), value);
@@ -87,6 +92,26 @@ public class RandomStringTest {
         @Override
         String getValue() {
             return theValue;
+        }
+    }
+    class HasMultipleRandomStrings extends HasXValues<String>{
+        @Rand
+        public String value1;
+        @Rand
+        public String value2;
+
+        @Override
+        String getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 2;
         }
     }
 }
