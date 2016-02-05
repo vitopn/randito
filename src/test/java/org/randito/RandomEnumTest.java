@@ -1,0 +1,52 @@
+package org.randito;
+
+import org.junit.Test;
+
+public class RandomEnumTest {
+    public enum TEST_ENUM{
+        VALUE01,
+        VALUE02
+    }
+    @Test
+    public void testIt(){
+        new HasRandomEnum().validate();
+    }
+    @Test
+    public void testMultiple(){
+        new HasMultipleRandomEnums().validate();
+
+    }
+
+
+    class HasRandomEnum extends HasValue<TEST_ENUM>{
+        @Rand
+        private TEST_ENUM value;
+
+        @Override
+        TEST_ENUM getValue() {
+            return value;
+        }
+    }
+
+    class HasMultipleRandomEnums extends HasXValues<TEST_ENUM>{
+        @Rand
+        private TEST_ENUM value1;
+        @Rand
+        private TEST_ENUM value2;
+
+        @Override
+        TEST_ENUM getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 2;
+        }
+    }
+
+}
