@@ -8,6 +8,7 @@ public abstract class BaseNumberTest {
         SINGLE_MIN_IS_MAX_MINUS_3,
         SINGLE_MAX_IS_MIN_PLUS_3,
         SINGLE_MIN_MAX_TWO_APART,
+        MULTIPLE_MORE_FIELDS_THAN_VALUES,
         MULTIPLE_MIN_MAX_TWO_APART
     }
 
@@ -36,6 +37,11 @@ public abstract class BaseNumberTest {
     @Test
     public void test_multipleInts(){
         getTargetInstance(TEST_CLASS_TYPE.MULTIPLE_MIN_MAX_TWO_APART).validate();
+    }
+
+    @Test
+    public void test_multipleIntsMoreFieldsThanValues(){
+        getTargetInstance(TEST_CLASS_TYPE.MULTIPLE_MORE_FIELDS_THAN_VALUES).validate();
     }
 
 }
