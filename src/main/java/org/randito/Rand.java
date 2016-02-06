@@ -10,7 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(FIELD)
 @Retention(RUNTIME)
 @Documented
-@interface Rand {
+public @interface Rand {
     int maxIntExclusive() default Integer.MAX_VALUE;
     int minIntInclusive() default Integer.MIN_VALUE;
 
