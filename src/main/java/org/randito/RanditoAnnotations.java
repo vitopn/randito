@@ -3,14 +3,12 @@ package org.randito;
 import org.mockito.internal.util.reflection.FieldSetter;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RanditoAnnotations {
 
     private static final int MAX_UNIQUE_ATTEMPT = 50;
+    private static final int MAX_EXCLUDES_RETRY = 50;
     private final Object target;
     private Map<Class,Set<Object>> values;
 
@@ -61,17 +59,25 @@ public class RanditoAnnotations {
         } else if ((fieldType == long.class) || (fieldType == Long.class)) {
             value = generateLong(annotation);
         } else if (fieldType.isEnum()){
-            value = generateEnumValue(fieldType);
+            value = generateEnumValue(annotation, field);
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
         return value;
     }
 
-    private Object generateEnumValue(Class<?> fieldType) {
-        Object[] enumConstants = fieldType.getEnumConstants();
-        int randomEnumIndex = RandomGenerator.generateRandomInt(0, enumConstants.length);
-        return enumConstants[randomEnumIndex];
+    private Object generateEnumValue(Rand annotation, Field field) {
+        Class<?> fieldType = field.getType();
+        Set<String> excludeValueNames = new HashSet<String>(Arrays.asList(annotation.excludeEnums()));
+        for(int i = 0 ;  i < MAX_EXCLUDES_RETRY; i++) {
+            Object[] enumConstants = fieldType.getEnumConstants();
+            int randomEnumIndex = RandomGenerator.generateRandomInt(0, enumConstants.length);
+            Object enumConstant = enumConstants[randomEnumIndex];
+            if(!excludeValueNames.contains(enumConstant.toString())) {
+                return enumConstant;
+            }
+        }
+        throw new FailedToFindUnexcludedValueForFieldException(field);
     }
 
     private boolean isUnique(Class<?> fieldType, Object value) {

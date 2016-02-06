@@ -1,5 +1,6 @@
 package org.randito;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class RandomEnumTest {
@@ -8,6 +9,15 @@ public class RandomEnumTest {
         VALUE01,
         VALUE02
     }
+
+    @SuppressWarnings("unused")
+    public enum TEST_ENUM2{
+        VALUE01,
+        VALUE02,
+        VALUE03,
+        VALUE04
+    }
+
     @Test
     public void testIt(){
         new HasRandomEnum().validate();
@@ -23,6 +33,15 @@ public class RandomEnumTest {
 
     }
 
+    @Test
+    public void testExcludes(){
+        for(int i = 0; i < 100;  i++) {
+            TEST_ENUM2 value = new HasRandomEnumWithExcludes().validateAndReturnValue();
+            Assert.assertNotEquals(TEST_ENUM2.VALUE03, value);
+            Assert.assertNotEquals(TEST_ENUM2.VALUE04, value);
+        }
+    }
+
 
     class HasRandomEnum extends HasValue<TEST_ENUM>{
         @Rand
@@ -30,6 +49,16 @@ public class RandomEnumTest {
 
         @Override
         TEST_ENUM getValue() {
+            return value;
+        }
+    }
+
+    class HasRandomEnumWithExcludes extends HasValue<TEST_ENUM2>{
+        @Rand(excludeEnums = {"VALUE03", "VALUE04"})
+        private TEST_ENUM2 value;
+
+        @Override
+        TEST_ENUM2 getValue() {
             return value;
         }
     }
