@@ -16,6 +16,8 @@ public class RandomIntTest extends BaseNumberTest{
                 return new HasRandomIntMinAndMaxInt().setMinValue(-1).setMaxValue(1);
             case MULTIPLE_MIN_MAX_TWO_APART:
                 return new HasTwoRandomInts().setMinValue(-1).setMaxValue(1);
+            case MULTIPLE_MORE_FIELDS_THAN_VALUES:
+                return new HasThreeRandomInts().setMinValue(-1).setMaxValue(1);
         }
         return null;
     }
@@ -81,5 +83,34 @@ public class RandomIntTest extends BaseNumberTest{
         }
     }
 
+    @SuppressWarnings("Duplicates")
+    class HasThreeRandomInts extends  HasXValues<Integer>{
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private int value1;
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private int value2;
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private int value3;
 
+        @Override
+        protected boolean shouldValidateUniqueness() {
+            return false;
+        }
+
+        @Override
+        Integer getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else if(index == 1){
+                return value2;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 3;
+        }
+    }
 }

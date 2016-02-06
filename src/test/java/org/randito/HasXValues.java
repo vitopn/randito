@@ -7,15 +7,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class HasXValues<T extends Comparable<T>> {
-    public static final int SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT = 50;
+    private static final int SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT = 50;
     private static final int RANGE_CHECK_MAX_ATTEMPT_COUNT = 1000;
     private static final int UNIQUE_CHECK_MAX_ATTEMPT_COUNT = 100;
+
+
+    abstract T getValue(int index);
+    abstract int getNumValues();
+    protected boolean shouldValidateUniqueness() {
+        return true;
+    }
 
     private T maxValue = null;
     private T minValue = null;
 
-    abstract T getValue(int index);
-    abstract int getNumValues();
 
     public T initAndGetValue(int index){
         initValues();
@@ -43,6 +48,9 @@ public abstract class HasXValues<T extends Comparable<T>> {
     }
 
     private void validateCurrentValueUniqueness() {
+        if(!shouldValidateUniqueness()){
+            return;
+        }
         Set<T> values = new HashSet<T>();
         for(int i = 0; i < getNumValues(); i++){
             T currentValue = getValue(i);

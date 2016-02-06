@@ -3,6 +3,7 @@ package org.randito;
 public class RandomIntegerTest extends BaseNumberTest{
 
 
+    @SuppressWarnings("Duplicates")
     @Override
     HasXValues getTargetInstance(TEST_CLASS_TYPE targetType) {
         switch(targetType){
@@ -16,6 +17,8 @@ public class RandomIntegerTest extends BaseNumberTest{
                 return new HasRandomIntMinAndMaxInt().setMinValue(-1).setMaxValue(1);
             case MULTIPLE_MIN_MAX_TWO_APART:
                 return new HasTwoRandomInts().setMinValue(-1).setMaxValue(1);
+            case MULTIPLE_MORE_FIELDS_THAN_VALUES:
+                return new HasThreeRandomInts().setMinValue(-1).setMaxValue(1);
         }
         return null;
     }
@@ -78,6 +81,37 @@ public class RandomIntegerTest extends BaseNumberTest{
         @Override
         int getNumValues() {
             return 2;
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    class HasThreeRandomInts extends  HasXValues<Integer>{
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private Integer value1;
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private Integer value2;
+        @Rand(minIntInclusive = -1, maxIntExclusive = 1)
+        private Integer value3;
+
+        @Override
+        protected boolean shouldValidateUniqueness() {
+            return false;
+        }
+
+        @Override
+        Integer getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else if(index == 1){
+                return value2;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 3;
         }
     }
 

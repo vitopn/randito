@@ -2,6 +2,7 @@ package org.randito;
 
 public class RandomLongPrimitiveTest extends BaseNumberTest{
 
+    @SuppressWarnings("Duplicates")
     @Override
     HasXValues getTargetInstance(BaseNumberTest.TEST_CLASS_TYPE targetType) {
         switch(targetType){
@@ -15,6 +16,8 @@ public class RandomLongPrimitiveTest extends BaseNumberTest{
                 return new HasRandomLongMinAndMaxLong().setMinValue(-1L).setMaxValue(1L);
             case MULTIPLE_MIN_MAX_TWO_APART:
                 return new HasTwoRandomLongs().setMinValue(-1L).setMaxValue(1L);
+            case MULTIPLE_MORE_FIELDS_THAN_VALUES:
+                return new HasThreeRandomLongs().setMinValue(-1L).setMaxValue(1L);
         }
         return null;
     }
@@ -78,6 +81,36 @@ public class RandomLongPrimitiveTest extends BaseNumberTest{
         int getNumValues() {
             return 2;
         }
+    }
 
+    @SuppressWarnings("Duplicates")
+    class HasThreeRandomLongs extends  HasXValues<Long>{
+        @Rand(minLongInclusive = -1, maxLongExclusive= 1)
+        private long value1;
+        @Rand(minLongInclusive = -1, maxLongExclusive= 1)
+        private long value2;
+        @Rand(minLongInclusive = -1, maxLongExclusive= 1)
+        private long value3;
+
+        @Override
+        protected boolean shouldValidateUniqueness() {
+            return false;
+        }
+
+        @Override
+        Long getValue(int index) {
+            if(index == 0){
+                return value1;
+            } else if(index == 1){
+                return value2;
+            } else {
+                return value2;
+            }
+        }
+
+        @Override
+        int getNumValues() {
+            return 3;
+        }
     }
 }
