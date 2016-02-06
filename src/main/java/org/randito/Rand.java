@@ -12,12 +12,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @interface Rand {
     int maxIntExclusive() default Integer.MAX_VALUE;
-
     int minIntInclusive() default Integer.MIN_VALUE;
 
     long maxLongExclusive() default Long.MAX_VALUE;
-
     long minLongInclusive() default Long.MIN_VALUE;
+
 
     enum CASE_CHANGE {
         UPPER,
@@ -25,4 +24,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         NONE
     }
     CASE_CHANGE caseChange() default CASE_CHANGE.NONE;
+
+    /**
+     * @return return the names of the enum constants to exclude.
+     */
+    String [] excludeEnums() default {};
 }
