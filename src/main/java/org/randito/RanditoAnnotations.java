@@ -1,5 +1,6 @@
 package org.randito;
 
+import org.bson.types.ObjectId;
 import org.mockito.internal.util.reflection.FieldSetter;
 
 import java.lang.reflect.Field;
@@ -58,12 +59,18 @@ public class RanditoAnnotations {
             value = generateInt(annotation);
         } else if ((fieldType == long.class) || (fieldType == Long.class)) {
             value = generateLong(annotation);
-        } else if (fieldType.isEnum()){
+        } else if (fieldType.isEnum()) {
             value = generateEnumValue(annotation, field);
+        }else if (fieldType == ObjectId.class){
+            value = generateRandomObjectId();
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
         return value;
+    }
+
+    private ObjectId generateRandomObjectId() {
+        return new ObjectId();
     }
 
     private Object generateEnumValue(Rand annotation, Field field) {
