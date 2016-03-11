@@ -61,12 +61,18 @@ public class RanditoAnnotations {
             value = generateLong(annotation);
         } else if (fieldType.isEnum()) {
             value = generateEnumValue(annotation, field);
+        } else if (fieldType == Boolean.class || (fieldType == boolean.class)) {
+            value = generateBooleanValue(annotation);
         }else if (fieldType == ObjectId.class){
             value = generateRandomObjectId();
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
         return value;
+    }
+
+    private boolean generateBooleanValue(Rand annotation) {
+        return RandomGenerator.generateRandomInt(0, 2) == 0;
     }
 
     private ObjectId generateRandomObjectId() {
