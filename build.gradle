@@ -5,7 +5,7 @@ apply plugin: 'signing'
 group = "com.github.vitopn"
 //noinspection GroovyUnusedAssignment
 archivesBaseName = "randito"
-version = "0.0.3"
+version = "0.0.4"
 
 repositories {
     mavenLocal()
