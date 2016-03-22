@@ -17,6 +17,7 @@ public class RanditoAnnotations {
         values = new HashMap<Class, Set<Object>>();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static void initRands(Object target) {
         new RanditoAnnotations(target).execute();
     }
@@ -52,6 +53,8 @@ public class RanditoAnnotations {
 
     private Object generateValue(Rand annotation, Field field, Class<?> fieldType) {
         Object value;
+        byte [] bytes = new byte[1];
+        Class byteArrayClass = bytes.getClass();
         if (fieldType == String.class) {
             value = generateString(field, annotation);
         } else if ((fieldType == int.class) || (fieldType == Integer.class)) {
@@ -62,10 +65,16 @@ public class RanditoAnnotations {
             value = generateEnumValue(annotation, field);
         } else if (fieldType == Boolean.class || (fieldType == boolean.class)) {
             value = generateBooleanValue();
+        } else if (fieldType == byteArrayClass){
+            value = generateByteArray(field, annotation);
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
         return value;
+    }
+
+    private byte[] generateByteArray(Field field, Rand annotation) {
+        return generateString(field, annotation).getBytes();
     }
 
     private boolean generateBooleanValue() {

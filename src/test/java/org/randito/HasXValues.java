@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class HasXValues<T extends Comparable<T>> {
-    private static final int SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT = 50;
+    static final int SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT = 50;
     private static final int RANGE_CHECK_MAX_ATTEMPT_COUNT = 1000;
     private static final int UNIQUE_CHECK_MAX_ATTEMPT_COUNT = 100;
 
@@ -22,7 +22,7 @@ public abstract class HasXValues<T extends Comparable<T>> {
     private T minValue = null;
 
 
-    public T initAndGetValue(int index){
+    T initAndGetValue(int index){
         initValues();
         return getValue(index);
     }
@@ -31,7 +31,7 @@ public abstract class HasXValues<T extends Comparable<T>> {
         RanditoAnnotations.initRands(this);
     }
 
-    public void validate(){
+    void validate(){
         initValues();
         for(int i = 0; i < getNumValues(); i++){
             validateSomeWhatRandom(i);
@@ -81,17 +81,18 @@ public abstract class HasXValues<T extends Comparable<T>> {
         Assert.fail(String.format("Value hasn't changed in %d attempts", SOMEWHAT_RANDOM_MAX_ATTEMPT_COUNT));
     }
 
-    public T validateAndReturnValue(int index){
+    T validateAndReturnValue(int index){
         validate();
         return getValue(index);
     }
 
-    public HasXValues<T> setMaxValue(T maxValue) {
+    HasXValues<T> setMaxValue(T maxValue) {
         this.maxValue = maxValue;
         return this;
     }
 
-    public HasXValues<T> setMinValue(T minValue) {
+    HasXValues<T> setMinValue(T minValue) {
         this.minValue = minValue;
         return this;
-    }}
+    }
+}
