@@ -5,6 +5,7 @@ import org.mockito.internal.util.reflection.FieldSetter;
 import java.lang.reflect.Field;
 import java.util.*;
 
+@SuppressWarnings("WeakerAccess")
 public class RanditoAnnotations {
 
     private static final int MAX_UNIQUE_ATTEMPT = 50;
@@ -14,7 +15,7 @@ public class RanditoAnnotations {
 
     public RanditoAnnotations(Object target) {
         this.target = target;
-        values = new HashMap<Class, Set<Object>>();
+        values = new HashMap<>();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -23,11 +24,18 @@ public class RanditoAnnotations {
     }
 
     private void execute() {
-        Class<?> targetClass = target.getClass();
+        processTargetClass(target.getClass());
+    }
+
+    private void processTargetClass(Class<?> targetClass) {
+        if(targetClass == null){
+            return;
+        }
         Field[] fields = targetClass.getDeclaredFields();
         for(Field field : fields){
             processField(target, field);
         }
+        processTargetClass(targetClass.getSuperclass());
     }
 
 
@@ -83,7 +91,7 @@ public class RanditoAnnotations {
 
     private Object generateEnumValue(Rand annotation, Field field) {
         Class<?> fieldType = field.getType();
-        Set<String> excludeValueNames = new HashSet<String>(Arrays.asList(annotation.excludeEnums()));
+        Set<String> excludeValueNames = new HashSet<>(Arrays.asList(annotation.excludeEnums()));
         for(int i = 0 ;  i < MAX_EXCLUDES_RETRY; i++) {
             Object[] enumConstants = fieldType.getEnumConstants();
             int randomEnumIndex = RandomGenerator.generateRandomInt(0, enumConstants.length);
@@ -106,7 +114,7 @@ public class RanditoAnnotations {
 
     private Set<Object> getValuesForType(Class<?> fieldType) {
         if(!values.containsKey(fieldType)){
-            values.put(fieldType, new HashSet<Object>());
+            values.put(fieldType, new HashSet<>());
         }
         return values.get(fieldType);
     }
