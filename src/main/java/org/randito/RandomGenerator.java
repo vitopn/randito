@@ -1,21 +1,28 @@
 package org.randito;
 
-import java.util.concurrent.ThreadLocalRandom;
-
+@SuppressWarnings("WeakerAccess") // used externally
 public class RandomGenerator {
+    private static RandomGeneratorUtil randomGeneratorUtil = new RandomGeneratorUtil();
+
+    public RandomGeneratorUtil getRandomGeneratorUtil() {
+        return randomGeneratorUtil;
+    }
+
     public static String generateRandomString(String prefix) {
-        return prefix + Integer.toString(generateRandomInt());
+        return randomGeneratorUtil.generateRandomString(prefix);
     }
 
     public static int generateRandomInt() {
-        return ThreadLocalRandom.current().nextInt();
+        return randomGeneratorUtil.generateRandomInt();
     }
 
     public static int generateRandomInt(int minInclusive, int maxExclusive) {
-        return ThreadLocalRandom.current().nextInt(minInclusive, maxExclusive);
+        return randomGeneratorUtil.generateRandomInt(minInclusive, maxExclusive);
     }
 
     public static long generateRandomLong(long minInclusive, long maxExclusive) {
-        return ThreadLocalRandom.current().nextLong(minInclusive, maxExclusive);
+        return randomGeneratorUtil.generateRandomLong(minInclusive, maxExclusive);
     }
+
+
 }
