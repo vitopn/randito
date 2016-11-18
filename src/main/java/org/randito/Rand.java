@@ -17,6 +17,10 @@ public @interface Rand {
     long maxLongExclusive() default Long.MAX_VALUE;
     long minLongInclusive() default Long.MIN_VALUE;
 
+    double maxDoubleExclusive() default Double.MAX_VALUE;
+
+    double minDoubleInclusive() default Double.MIN_VALUE;
+
 
     enum CASE_CHANGE {
         UPPER,

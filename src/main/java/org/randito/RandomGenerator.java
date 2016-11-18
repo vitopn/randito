@@ -25,4 +25,7 @@ public class RandomGenerator {
     }
 
 
+    public static double generateRandomDouble(double minInclusive, double maxExclusive) {
+        return randomGeneratorUtil.generateRandomDouble(minInclusive, maxExclusive);
+    }
 }
