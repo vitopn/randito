@@ -19,4 +19,8 @@ public class RandomGeneratorUtil {
     public long generateRandomLong(long minInclusive, long maxExclusive) {
         return ThreadLocalRandom.current().nextLong(minInclusive, maxExclusive);
     }
+
+    public double generateRandomDouble(double minInclusive, double maxExclusive) {
+        return ThreadLocalRandom.current().nextDouble(minInclusive, maxExclusive);
+    }
 }

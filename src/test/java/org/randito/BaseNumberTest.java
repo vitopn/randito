@@ -3,7 +3,7 @@ package org.randito;
 import org.junit.Test;
 
 public abstract class BaseNumberTest {
-    public enum TEST_CLASS_TYPE{
+    enum TEST_CLASS_TYPE{
         SINGLE_NO_RANGE,
         SINGLE_MIN_IS_MAX_MINUS_3,
         SINGLE_MAX_IS_MIN_PLUS_3,

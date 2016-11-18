@@ -73,8 +73,10 @@ public class RanditoAnnotations {
             value = generateEnumValue(annotation, field);
         } else if (fieldType == Boolean.class || (fieldType == boolean.class)) {
             value = generateBooleanValue();
-        } else if (fieldType == byteArrayClass){
+        } else if (fieldType == byteArrayClass) {
             value = generateByteArray(field, annotation);
+        } else if ((fieldType == double.class ) || (fieldType == Double.class)){
+            value = generateDouble(annotation);
         } else {
             throw new UnsupportedFieldTypeException(fieldType);
         }
@@ -121,6 +123,10 @@ public class RanditoAnnotations {
 
     private  Object generateLong(Rand annotation) {
         return RandomGenerator.generateRandomLong(annotation.minLongInclusive(), annotation.maxLongExclusive());
+    }
+
+    private Object generateDouble(Rand annotation) {
+        return RandomGenerator.generateRandomDouble(annotation.minDoubleInclusive(), annotation.maxDoubleExclusive());
     }
 
     private int generateInt(Rand annotation) {

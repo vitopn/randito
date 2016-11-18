@@ -2,12 +2,17 @@ package org.randito;
 
 import org.junit.Test;
 
-public class UnsupportFieldTest {
+public class UnsupportedFieldTest {
     @Rand
-    Double value;
+    SomeClass value;
 
     @Test(expected = UnsupportedFieldTypeException.class)
     public void testIt(){
         RanditoAnnotations.initRands(this);
+    }
+
+
+    private class SomeClass{
+
     }
 }
