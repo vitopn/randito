@@ -5,7 +5,7 @@ import org.mockito.internal.util.reflection.FieldSetter;
 import java.lang.reflect.Field;
 import java.util.*;
 
-@SuppressWarnings("WeakerAccess") // used outside of this project
+@SuppressWarnings({"WeakerAccess", "unused"}) // used outside of this project
 /*
  * Will try to set the value of any fields in the target object.
  * If processOnlyRandAnnotated it will skip any field without a @Rand annotation.
@@ -25,6 +25,11 @@ public class RandomizeObjectFields {
     public RandomizeObjectFields(Object target) {
         this.target = target;
         values = new HashMap<>();
+    }
+
+    public RandomizeObjectFields(Object target, boolean processOnlyRandAnnotated) {
+        this(target);
+        this.processOnlyRandAnnotated = processOnlyRandAnnotated;
     }
 
     public void execute() {
