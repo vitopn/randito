@@ -9,7 +9,7 @@ public class RanditoAnnotations {
 
 
     public RanditoAnnotations(Object target) {
-        this.randomizeObjectFields = new RandomizeObjectFields(target);
+        this.randomizeObjectFields = new RandomizeObjectFields(target, true);
     }
 
 
