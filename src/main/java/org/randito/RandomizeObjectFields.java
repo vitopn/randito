@@ -5,7 +5,7 @@ import org.mockito.internal.util.reflection.FieldSetter;
 import java.lang.reflect.Field;
 import java.util.*;
 
-@SuppressWarnings({"WeakerAccess", "unused"}) // used outside of this project
+@SuppressWarnings({"WeakerAccess"}) // used outside of this project
 /*
  * Will try to set the value of any fields in the target object.
  * If processOnlyRandAnnotated it will skip any field without a @Rand annotation.
@@ -22,7 +22,7 @@ public class RandomizeObjectFields {
     @Rand
     public int forDefaultRandAnnotation;
 
-    /**
+    /*
      *  Deprecated -- Use the other constructor to specify processOnlyRandAnnotated
      */
     @Deprecated
@@ -47,6 +47,9 @@ public class RandomizeObjectFields {
         Field[] fields = targetClass.getDeclaredFields();
         for(Field field : fields){
             try {
+                if(isFinal(field)){
+                    continue;
+                }
                 processField(target, field);
             } catch (UnsupportedFieldTypeException e) {
                 if(processOnlyRandAnnotated){
@@ -55,6 +58,10 @@ public class RandomizeObjectFields {
             }
         }
         processTargetClass(targetClass.getSuperclass());
+    }
+
+    private boolean isFinal(Field field) {
+        return (field.getModifiers() & java.lang.reflect.Modifier.FINAL) == java.lang.reflect.Modifier.FINAL;
     }
 
 
