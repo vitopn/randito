@@ -22,13 +22,17 @@ public class RandomizeObjectFields {
     @Rand
     public int forDefaultRandAnnotation;
 
+    /**
+     *  Deprecated -- Use the other constructor to specify processOnlyRandAnnotated
+     */
+    @Deprecated
     public RandomizeObjectFields(Object target) {
-        this.target = target;
-        values = new HashMap<>();
+        this(target, true);
     }
 
     public RandomizeObjectFields(Object target, boolean processOnlyRandAnnotated) {
-        this(target);
+        this.target = target;
+        values = new HashMap<>();
         this.processOnlyRandAnnotated = processOnlyRandAnnotated;
     }
 
