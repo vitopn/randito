@@ -22,7 +22,7 @@ public class RandomizeObjectFields {
     @Rand
     public int forDefaultRandAnnotation;
 
-    /**
+    /*
      *  Deprecated -- Use the other constructor to specify processOnlyRandAnnotated
      */
     @Deprecated
@@ -61,7 +61,7 @@ public class RandomizeObjectFields {
     }
 
     private boolean isFinal(Field field) {
-        return ((field.getModifiers() & java.lang.reflect.Modifier.FINAL) == java.lang.reflect.Modifier.FINAL);
+        return (field.getModifiers() & java.lang.reflect.Modifier.FINAL) == java.lang.reflect.Modifier.FINAL;
     }
 
 
