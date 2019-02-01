@@ -17,18 +17,10 @@ public class RandomizeObjectFields {
     private final Object target;
     private Map<Class,Set<Object>> values;
 
-    public boolean processOnlyRandAnnotated = true;
+    private boolean processOnlyRandAnnotated;
 
     @Rand
     public int forDefaultRandAnnotation;
-
-    /*
-     *  Deprecated -- Use the other constructor to specify processOnlyRandAnnotated
-     */
-    @Deprecated
-    public RandomizeObjectFields(Object target) {
-        this(target, true);
-    }
 
     public RandomizeObjectFields(Object target, boolean processOnlyRandAnnotated) {
         this.target = target;
@@ -77,16 +69,15 @@ public class RandomizeObjectFields {
         }
 
         Class<?> fieldType = field.getType();
-        FieldSetter fieldSetter = new FieldSetter(target, field);
         Object value = null;
         for(int attempt = 0; attempt < MAX_UNIQUE_ATTEMPT; attempt++) {
             value = generateValue(annotation, field, fieldType);
             if(isUnique(fieldType, value)){
-                setValue(fieldSetter, fieldType, value);
+                setValue(target, field, fieldType, value);
                 return;
             }
         }
-        setValue(fieldSetter, fieldType, value);
+        setValue(target, field, fieldType, value);
     }
 
     private Rand getDefaultRandAnnotation() {
@@ -149,8 +140,8 @@ public class RandomizeObjectFields {
         return !getValuesForType(fieldType).contains(value);
     }
 
-    private void setValue(FieldSetter fieldSetter , Class<?> fieldType, Object value) {
-        fieldSetter.set(value);
+    private void setValue(Object target, Field field, Class<?> fieldType, Object value) {
+        FieldSetter.setField(target, field, value);
         getValuesForType(fieldType).add(value);
     }
 
