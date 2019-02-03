@@ -1,7 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'signing'
-
 apply plugin: 'pmd'
 
 //noinspection GroovyAssignabilityCheck
@@ -11,8 +9,8 @@ compileJava {
 
 group = "com.github.vitopn"
 //noinspection GroovyUnusedAssignment
-archivesBaseName = "randito"
-version = "1.0.0"
+archivesBaseName = "randito2"
+version = "2.0.0"
 
 repositories {
     mavenLocal()
@@ -40,59 +38,4 @@ task sourcesJar(type: Jar) {
 artifacts {
     //noinspection GroovyAssignabilityCheck
     archives javadocJar, sourcesJar
-}
-
-if(project.hasProperty('ossrhUsername')){
-    signing {
-        sign configurations.archives
-    }
-
-    //noinspection GroovyMissingReturnStatement,GroovyAssignabilityCheck
-    uploadArchives {
-        repositories {
-            mavenDeployer {
-                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                pom.project {
-                    //noinspection GroovyAssignabilityCheck
-                    name 'Randito'
-                    //noinspection GroovyAssignabilityCheck
-                    packaging 'jar'
-                    //noinspection GroovyAssignabilityCheck
-                    description 'Annotation based random value generator.  Randito is modeled after the way Mockito injects mock values into class instance fields.'
-                    url 'https://github.com/vitopn/randito'
-
-                    scm {
-                        connection 'https://github.com/vitopn/randito.git'
-                        developerConnection 'https://github.com/vitopn/randito.git'
-                        url 'https://github.com/vitopn/randito'
-                    }
-
-                    licenses {
-                        license {
-                            //noinspection GroovyAssignabilityCheck
-                            name 'The Apache License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'vitopn'
-                            //noinspection GroovyAssignabilityCheck
-                            name 'Vito Paine'
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
